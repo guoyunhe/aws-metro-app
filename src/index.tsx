@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
