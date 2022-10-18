@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 
+// CORS
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
 
