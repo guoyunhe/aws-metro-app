@@ -1,3 +1,10 @@
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Button,
+  Input,
+} from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -16,32 +23,28 @@ export default function Login() {
   return (
     <div style={{ padding: 15 }}>
       <h1>Login</h1>
-      <p>
-        <label>
-          <div>Username:</div>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          />
-        </label>
-      </p>
-      <p>
-        <label>
-          <div>Password:</div>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </label>
-      </p>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <button
+      <FormControl mb={3}>
+        <FormLabel as="legend">Username</FormLabel>
+        <Input
+          type="text"
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+      </FormControl>
+      <FormControl mb={3}>
+        <FormLabel as="legend">Password</FormLabel>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+      </FormControl>
+      {error && <FormErrorMessage mb={3}>{error}</FormErrorMessage>}
+      <Button
         onClick={() => {
           axios
             .post("/login", {
@@ -57,7 +60,7 @@ export default function Login() {
         }}
       >
         Login
-      </button>
+      </Button>
     </div>
   );
 }

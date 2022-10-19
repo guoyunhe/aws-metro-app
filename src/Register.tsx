@@ -1,3 +1,10 @@
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Button,
+} from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -9,6 +16,8 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  console.log(error);
+
   if (user) {
     return <Navigate to="/" />;
   }
@@ -16,32 +25,28 @@ export default function Register() {
   return (
     <div style={{ padding: 15 }}>
       <h1>Register</h1>
-      <p>
-        <label>
-          <div>Username:</div>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          />
-        </label>
-      </p>
-      <p>
-        <label>
-          <div>Password:</div>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </label>
-      </p>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <button
+      <FormControl mb={3}>
+        <FormLabel>Username</FormLabel>
+        <Input
+          type="text"
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+      </FormControl>
+      <FormControl mb={3}>
+        <FormLabel>Password</FormLabel>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+      </FormControl>
+      {error && <FormErrorMessage mb={3}>{error}</FormErrorMessage>}
+      <Button
         onClick={() => {
           axios
             .post("/register", {
@@ -57,7 +62,7 @@ export default function Register() {
         }}
       >
         Register
-      </button>
+      </Button>
     </div>
   );
 }

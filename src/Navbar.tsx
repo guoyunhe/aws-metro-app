@@ -1,21 +1,31 @@
+import { Box, Button, Heading } from "@chakra-ui/react";
 import axios from "axios";
-import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 export default function Navbar() {
   const { user, setUser } = useAuth();
   return (
-    <div
-      style={{ display: "flex", padding: 15, borderBottom: "1px solid black" }}
-    >
-      <div style={{ flex: "1 1 auto" }}>Metro Photo Management System</div>
+    <Box borderBottomWidth={1} p={4} display="flex">
+      <Heading size="lg" mr={4}>
+        Metro Photo Management System
+      </Heading>
+      <Button variant="ghost" as={NavLink} to="/" mr={4}>
+        Home
+      </Button>
+      <Button variant="ghost" as={NavLink} to="/blog" mr={4}>
+        Blog
+      </Button>
+      <Button variant="ghost" as={NavLink} to="/about" mr={4}>
+        About
+      </Button>
+      <Box flex="1 1 auto" />
       {user ? (
         <div>
-          <NavLink to="/settings" style={{ paddingRight: 15 }}>
+          <Button as={NavLink} to="/settings" mr={4}>
             {user.username}
-          </NavLink>
-          <button
+          </Button>
+          <Button
             onClick={() => {
               axios.post("/logout").then(() => {
                 setUser(null);
@@ -23,16 +33,18 @@ export default function Navbar() {
             }}
           >
             Logout
-          </button>
+          </Button>
         </div>
       ) : (
         <div>
-          <NavLink to="/login" style={{ paddingRight: 15 }}>
+          <Button as={NavLink} to="/login" mr={4}>
             Login
-          </NavLink>
-          <NavLink to="/register">Register</NavLink>
+          </Button>
+          <Button as={NavLink} to="/register">
+            Register
+          </Button>
         </div>
       )}
-    </div>
+    </Box>
   );
 }
