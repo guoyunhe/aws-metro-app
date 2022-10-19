@@ -9,10 +9,17 @@ export default function Navbar() {
     <div
       style={{ display: "flex", padding: 15, borderBottom: "1px solid black" }}
     >
-      <div style={{ flex: "1 1 auto" }}>Metro Photo Management System</div>
+      <div style={{ marginRight: 15 }}>Metro Photo Management System</div>
+      <NavLink to="/" style={{ marginRight: 15 }}>
+        Gallery
+      </NavLink>
+      <NavLink to="/upload" style={{ marginRight: 15 }}>
+        Upload
+      </NavLink>
+      <div style={{ flex: "1 1 auto" }} />
       {user ? (
         <div>
-          <NavLink to="/settings" style={{ paddingRight: 15 }}>
+          <NavLink to="/settings" style={{ marginRight: 15 }}>
             {user.username}
           </NavLink>
           <button
@@ -27,7 +34,7 @@ export default function Navbar() {
         </div>
       ) : (
         <div>
-          <NavLink to="/login" style={{ paddingRight: 15 }}>
+          <NavLink to="/login" style={{ marginRight: 15 }}>
             Login
           </NavLink>
           <NavLink to="/register">Register</NavLink>

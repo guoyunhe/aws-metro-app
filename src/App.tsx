@@ -10,6 +10,7 @@ import Editor from "./Editor";
 import { RequireAuth } from "./RequireAuth";
 import { AuthProvider } from "./AuthContext";
 import Settings from "./Settings";
+import Upload from "./Upload";
 
 function App() {
   useEffect(() => {
@@ -28,6 +29,14 @@ function App() {
               element={
                 <RequireAuth>
                   <Gallery />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/upload"
+              element={
+                <RequireAuth>
+                  <Upload />
                 </RequireAuth>
               }
             />
