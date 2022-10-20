@@ -15,7 +15,7 @@ export default function Gallery() {
       <h1>Gallery</h1>
       {photos.map((photo: any) => (
         <Link to={"/photos/" + photo._id}>
-          <img key={photo._id} src={photo.url} alt={photo.name} />
+          <img key={photo._id} src={photo.url} />
         </Link>
       ))}
     </div>

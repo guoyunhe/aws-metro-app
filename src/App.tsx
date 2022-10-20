@@ -41,7 +41,7 @@ function App() {
               }
             />
             <Route
-              path="/editor/:id"
+              path="/photos/:id"
               element={
                 <RequireAuth>
                   <Editor />
