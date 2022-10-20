@@ -13,11 +13,24 @@ export default function Gallery() {
   return (
     <div style={{ padding: 15 }}>
       <h1>Gallery</h1>
-      {photos.map((photo: any) => (
-        <Link to={"/photos/" + photo._id}>
-          <img key={photo._id} src={photo.url} alt={photo.name} />
-        </Link>
-      ))}
+      <div style={{ margin: -8 }}>
+        {photos.map((photo: any) => (
+          <Link to={"/photos/" + photo._id}>
+            <img
+              key={photo._id}
+              src={photo.url}
+              alt={photo.name}
+              style={{
+                width: 300,
+                height: 300,
+                objectFit: "cover",
+                objectPosition: "center",
+                margin: 8,
+              }}
+            />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
