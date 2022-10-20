@@ -1,5 +1,20 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 export default function Gallery() {
-  return <div>Gallery</div>;
+  const [photos, setPhotos] = useState<any[]>([]);
+  useEffect(() => {
+    axios.get("/photos/").then((res) => {
+      setPhotos(res.data || []);
+      console.log(res.data);
+    });
+  }, []);
+  return (
+    <div style={{ padding: 15 }}>
+      <h1>Gallery</h1>
+      {photos.map((photo: any) => (
+        <img key={photo._id} src={photo.url} />
+      ))}
+    </div>
+  );
 }
