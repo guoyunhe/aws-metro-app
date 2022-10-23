@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SelectBox from "./SelectBox";
 import Photo from "./types/Photo";
 
 export default function Editor() {
   const [photo, setPhoto] = useState<Photo | null>(null);
+  const goto = useNavigate();
   const { id } = useParams();
 
   const [drawing, setDrawing] = useState(false);
@@ -25,14 +26,29 @@ export default function Editor() {
   }, [reload]);
 
   if (!photo || !id) return null;
+
+  const Media = photo.mimetype.startsWith("video/") ? "video" : "img";
+
   return (
     <div style={{ padding: 15 }}>
-      <h1>Add Labels To Photo</h1>
+      <h1>
+        {photo.originalname}
+        <button
+          onClick={() => {
+            axios.delete("/photos/" + id).then(() => {
+              goto("/");
+            });
+          }}
+        >
+          Delete
+        </button>
+      </h1>
       <div style={{ position: "relative" }}>
-        <img
+        <Media
           src={photo.url}
-          alt={photo.name}
+          alt={photo.originalname}
           draggable={false}
+          controls
           style={{
             display: "block",
             maxWidth: "100%",

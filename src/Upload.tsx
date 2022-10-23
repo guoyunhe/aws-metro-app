@@ -9,7 +9,7 @@ export default function Upload() {
       <h1>Upload</h1>
       <input
         type="file"
-        accept="image/jpeg,image/gif,image/png"
+        accept="image/*,video/*"
         multiple
         onChange={(e) => {
           if (e.target.files?.length) {

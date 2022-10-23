@@ -16,18 +16,32 @@ export default function Gallery() {
       <div style={{ margin: -8 }}>
         {photos.map((photo) => (
           <Link to={"/photos/" + photo._id}>
-            <img
-              key={photo._id}
-              src={photo.url}
-              alt={photo.name}
-              style={{
-                width: 300,
-                height: 300,
-                objectFit: "cover",
-                objectPosition: "center",
-                margin: 8,
-              }}
-            />
+            {photo.mimetype.startsWith("image/") ? (
+              <img
+                key={photo._id}
+                src={photo.url}
+                alt={photo.originalname}
+                style={{
+                  width: 300,
+                  height: 300,
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  margin: 8,
+                }}
+              />
+            ) : (
+              <video
+                style={{
+                  width: 300,
+                  height: 300,
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  margin: 8,
+                }}
+              >
+                <source src={photo.url} type={photo.mimetype}></source>
+              </video>
+            )}
           </Link>
         ))}
       </div>

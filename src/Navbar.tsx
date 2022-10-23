@@ -9,7 +9,7 @@ export default function Navbar() {
     <div
       style={{ display: "flex", padding: 15, borderBottom: "1px solid black" }}
     >
-      <div style={{ marginRight: 15 }}>Metro Photo Management System</div>
+      <div style={{ marginRight: 15 }}>ABC Metro Gallery</div>
       <NavLink to="/" style={{ marginRight: 15 }}>
         Gallery
       </NavLink>
