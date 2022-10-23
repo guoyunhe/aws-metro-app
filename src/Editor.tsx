@@ -2,9 +2,10 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SelectBox from "./SelectBox";
+import Photo from "./types/Photo";
 
 export default function Editor() {
-  const [photo, setPhoto] = useState<any>(null);
+  const [photo, setPhoto] = useState<Photo | null>(null);
   const { id } = useParams();
 
   const [drawing, setDrawing] = useState(false);
@@ -16,7 +17,6 @@ export default function Editor() {
   const reload = useCallback(() => {
     axios.get("/photos/" + id).then((res) => {
       setPhoto(res.data);
-      console.log(res.data);
     });
   }, [id]);
 
@@ -85,8 +85,8 @@ export default function Editor() {
             pointerEvents: "none",
           }}
         />
-        {photo.labels?.map(({ _id }: any) => (
-          <SelectBox photoId={id} labelId={_id} />
+        {photo.labels.map(({ _id }) => (
+          <SelectBox key={_id} photoId={id} labelId={_id} />
         ))}
       </div>
     </div>

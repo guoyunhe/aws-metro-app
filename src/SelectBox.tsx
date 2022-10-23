@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import Label from "./types/Label";
 
 export interface SelectBoxProps {
   photoId: string;
@@ -7,7 +8,7 @@ export interface SelectBoxProps {
 }
 
 export default function SelectBox({ labelId, photoId }: SelectBoxProps) {
-  const [label, setLabel] = useState<any>(null);
+  const [label, setLabel] = useState<Label | null>(null);
 
   const reload = useCallback(() => {
     axios.get("/photos/" + photoId + "/labels/" + labelId).then((res) => {
@@ -23,7 +24,7 @@ export default function SelectBox({ labelId, photoId }: SelectBoxProps) {
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
-      setLabel((prev: any) => ({ ...prev, catalog: e.target.value }));
+      setLabel((prev) => (prev ? { ...prev, catalog: e.target.value } : prev));
       axios.patch("/photos/" + photoId + "/labels/" + labelId, {
         catalog: e.target.value,
       });

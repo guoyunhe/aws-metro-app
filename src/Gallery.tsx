@@ -1,20 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Photo from "./types/Photo";
 
 export default function Gallery() {
-  const [photos, setPhotos] = useState<any[]>([]);
+  const [photos, setPhotos] = useState<Photo[]>([]);
   useEffect(() => {
     axios.get("/photos/").then((res) => {
       setPhotos(res.data || []);
-      console.log(res.data);
     });
   }, []);
   return (
     <div style={{ padding: 15 }}>
       <h1>Gallery</h1>
       <div style={{ margin: -8 }}>
-        {photos.map((photo: any) => (
+        {photos.map((photo) => (
           <Link to={"/photos/" + photo._id}>
             <img
               key={photo._id}
