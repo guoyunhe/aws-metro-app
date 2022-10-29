@@ -17,9 +17,8 @@ export default function SelectBox({ labelId, photoId }: SelectBoxProps) {
   }, [photoId, labelId]);
 
   const handleDelete = useCallback(() => {
-    axios.delete("/photos/" + photoId + "/labels/" + labelId).then((res) => {
-      setLabel(null);
-    });
+    setLabel(null);
+    axios.delete("/photos/" + photoId + "/labels/" + labelId).then((res) => {});
   }, [photoId, labelId]);
 
   const handleChange = useCallback(

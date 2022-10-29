@@ -35,9 +35,8 @@ export default function Editor() {
         {photo.originalname}
         <button
           onClick={() => {
-            axios.delete("/photos/" + id).then(() => {
-              goto("/");
-            });
+            axios.delete("/photos/" + id);
+            goto("/");
           }}
         >
           Delete
@@ -71,7 +70,6 @@ export default function Editor() {
             }
           }}
           onMouseUp={(e) => {
-            setDrawing(false);
             const { width, height } = e.currentTarget.getBoundingClientRect();
             if (Math.abs(startX - endX) > 20 && Math.abs(startY - endY) > 20) {
               axios
@@ -84,6 +82,9 @@ export default function Editor() {
                 })
                 .then(() => {
                   reload();
+                })
+                .finally(() => {
+                  setDrawing(false);
                 });
             }
           }}
