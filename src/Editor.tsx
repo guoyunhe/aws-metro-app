@@ -81,7 +81,10 @@ export default function Editor() {
                 catalog: "",
               };
 
-              if (data.width > 20 && data.height > 20) {
+              if (
+                Math.abs(startX - endX) > 20 &&
+                Math.abs(startY - endY) > 20
+              ) {
                 setPhoto({
                   ...photo,
                   labels: [...photo.labels, { ...data, _id: "new" }],
