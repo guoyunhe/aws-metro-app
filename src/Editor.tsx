@@ -71,21 +71,22 @@ export default function Editor() {
           }}
           onMouseUp={(e) => {
             const { width, height } = e.currentTarget.getBoundingClientRect();
+            setDrawing(false);
+            const data = {
+              left: Math.min(startX, endX) / width,
+              top: Math.min(startY, endY) / height,
+              width: Math.abs(startX - endX) / width,
+              height: Math.abs(startY - endY) / height,
+              catalog: "",
+            };
+            setPhoto({
+              ...photo,
+              labels: [...photo.labels, { ...data, _id: "new" }],
+            });
             if (Math.abs(startX - endX) > 20 && Math.abs(startY - endY) > 20) {
-              axios
-                .post("/photos/" + id + "/labels", {
-                  left: Math.min(startX, endX) / width,
-                  top: Math.min(startY, endY) / height,
-                  width: Math.abs(startX - endX) / width,
-                  height: Math.abs(startY - endY) / height,
-                  catalog: "",
-                })
-                .then(() => {
-                  reload();
-                })
-                .finally(() => {
-                  setDrawing(false);
-                });
+              axios.post("/photos/" + id + "/labels", data).then(() => {
+                reload();
+              });
             }
           }}
         />
