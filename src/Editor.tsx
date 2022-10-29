@@ -80,14 +80,12 @@ export default function Editor() {
                 height: Math.abs(startY - endY) / height,
                 catalog: "",
               };
-              setPhoto({
-                ...photo,
-                labels: [...photo.labels, { ...data, _id: "new" }],
-              });
-              if (
-                Math.abs(startX - endX) > 20 &&
-                Math.abs(startY - endY) > 20
-              ) {
+
+              if (data.width > 20 && data.height > 20) {
+                setPhoto({
+                  ...photo,
+                  labels: [...photo.labels, { ...data, _id: "new" }],
+                });
                 axios.post("/photos/" + id + "/labels", data).then(() => {
                   reload();
                 });
