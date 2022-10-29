@@ -42,70 +42,75 @@ export default function Editor() {
           Delete
         </button>
       </h1>
-      <div style={{ position: "relative" }}>
-        <Media
-          src={photo.url}
-          alt={photo.originalname}
-          draggable={false}
-          controls
-          style={{
-            display: "block",
-            maxWidth: "100%",
-            height: "auto",
-            userSelect: "none",
-          }}
-          onMouseDown={(e) => {
-            setDrawing(true);
-            const { left, top } = e.currentTarget.getBoundingClientRect();
-            setStartX(e.clientX - left);
-            setStartY(e.clientY - top);
-            setEndX(e.clientX - left);
-            setEndY(e.clientY - top);
-          }}
-          onMouseMove={(e) => {
-            if (drawing) {
+      <div style={{ display: "flex" }}>
+        <div style={{ position: "relative" }}>
+          <Media
+            src={photo.url}
+            alt={photo.originalname}
+            draggable={false}
+            controls
+            style={{
+              display: "block",
+              maxWidth: "100%",
+              height: "auto",
+              userSelect: "none",
+            }}
+            onMouseDown={(e) => {
+              setDrawing(true);
               const { left, top } = e.currentTarget.getBoundingClientRect();
+              setStartX(e.clientX - left);
+              setStartY(e.clientY - top);
               setEndX(e.clientX - left);
               setEndY(e.clientY - top);
-            }
-          }}
-          onMouseUp={(e) => {
-            const { width, height } = e.currentTarget.getBoundingClientRect();
-            setDrawing(false);
-            const data = {
-              left: Math.min(startX, endX) / width,
-              top: Math.min(startY, endY) / height,
-              width: Math.abs(startX - endX) / width,
-              height: Math.abs(startY - endY) / height,
-              catalog: "",
-            };
-            setPhoto({
-              ...photo,
-              labels: [...photo.labels, { ...data, _id: "new" }],
-            });
-            if (Math.abs(startX - endX) > 20 && Math.abs(startY - endY) > 20) {
-              axios.post("/photos/" + id + "/labels", data).then(() => {
-                reload();
+            }}
+            onMouseMove={(e) => {
+              if (drawing) {
+                const { left, top } = e.currentTarget.getBoundingClientRect();
+                setEndX(e.clientX - left);
+                setEndY(e.clientY - top);
+              }
+            }}
+            onMouseUp={(e) => {
+              const { width, height } = e.currentTarget.getBoundingClientRect();
+              setDrawing(false);
+              const data = {
+                left: Math.min(startX, endX) / width,
+                top: Math.min(startY, endY) / height,
+                width: Math.abs(startX - endX) / width,
+                height: Math.abs(startY - endY) / height,
+                catalog: "",
+              };
+              setPhoto({
+                ...photo,
+                labels: [...photo.labels, { ...data, _id: "new" }],
               });
-            }
-          }}
-        />
-        <div
-          style={{
-            display: drawing ? "block" : "none",
-            position: "absolute",
-            left: Math.min(startX, endX),
-            top: Math.min(startY, endY),
-            width: Math.abs(startX - endX),
-            height: Math.abs(startY - endY),
-            border: "1px solid black",
-            boxShadow: "0 0 0 1px white,0 0 0 1px white inset",
-            pointerEvents: "none",
-          }}
-        />
-        {photo.labels.map(({ _id }) => (
-          <SelectBox key={_id} photoId={id} labelId={_id} />
-        ))}
+              if (
+                Math.abs(startX - endX) > 20 &&
+                Math.abs(startY - endY) > 20
+              ) {
+                axios.post("/photos/" + id + "/labels", data).then(() => {
+                  reload();
+                });
+              }
+            }}
+          />
+          <div
+            style={{
+              display: drawing ? "block" : "none",
+              position: "absolute",
+              left: Math.min(startX, endX),
+              top: Math.min(startY, endY),
+              width: Math.abs(startX - endX),
+              height: Math.abs(startY - endY),
+              border: "1px solid black",
+              boxShadow: "0 0 0 1px white,0 0 0 1px white inset",
+              pointerEvents: "none",
+            }}
+          />
+          {photo.labels.map(({ _id }) => (
+            <SelectBox key={_id} photoId={id} labelId={_id} />
+          ))}
+        </div>
       </div>
     </div>
   );
